@@ -1,0 +1,72 @@
+{
+  "name": "mpa",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --config config/webpack.prod.ts --progress",
+    "serve": "webpack-dev-server --config config/webpack.dev.ts --progress --profile --watch",
+    "serve:hot": "npm run serve -- --hot --inline"
+  },
+  "author": "MuWei",
+  "license": "MIT",
+  "dependencies": {
+    "core-js": "^2.5.0",
+    "jquery": "^3.2.1",
+    "lodash": "^4.17.4",
+    "rxjs": "^5.4.2",
+    "vue": "^2.4.2",
+    "zone.js": "^0.8.16"
+  },
+  "devDependencies": {
+    "@types/core-js": "^0.9.42",
+    "@types/jquery": "^3.2.11",
+    "@types/lodash": "^4.14.71",
+    "@types/node": "^8.0.19",
+    "add-asset-html-webpack-plugin": "^2.0.1",
+    "autoprefixer": "^7.1.2",
+    "babel-core": "^6.25.0",
+    "babel-loader": "^7.1.1",
+    "babel-preset-babili": "^0.1.4",
+    "clean-webpack-plugin": "^0.1.16",
+    "copy-webpack-plugin": "^4.0.1",
+    "css-loader": "^0.28.4",
+    "ejs-tpl-loader": "^1.0.5",
+    "extract-text-webpack-plugin": "^3.0.0",
+    "file-loader": "^0.11.2",
+    "html-loader": "^0.5.0",
+    "html-webpack-plugin": "^2.30.1",
+    "inline-manifest-webpack-plugin": "^3.0.1",
+    "json-loader": "^0.5.7",
+    "node-sass": "^4.5.3",
+    "nunjucks": "^3.0.1",
+    "nunjucks-html-loader": "^1.1.0",
+    "postcss-loader": "^2.0.6",
+    "raw-loader": "^0.5.1",
+    "sass-loader": "^6.0.6",
+    "script-ext-html-webpack-plugin": "^1.8.5",
+    "script-loader": "^0.7.0",
+    "style-loader": "^0.18.2",
+    "ts-loader": "^2.3.2",
+    "ts-node": "^3.3.0",
+    "tslib": "^1.7.1",
+    "typescript": "^2.4.2",
+    "url-loader": "^0.5.9",
+    "webpack": "^3.4.1",
+    "webpack-dev-server": "^2.6.1",
+    "webpack-dll-bundles-plugin": "^1.0.0-beta.5",
+    "webpack-merge": "^4.1.0",
+    "webpack-spritesmith": "^0.3.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/muweigg/MPA.git"
+  },
+  "keywords": [
+    "MPA"
+  ],
+  "bugs": {
+    "url": "https://github.com/muweigg/MPA/issues"
+  },
+  "homepage": "https://github.com/muweigg/MPA#readme"
+}
