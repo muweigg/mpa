@@ -6,13 +6,13 @@ const path = require('path');
 const helpers = require('./helpers');
 const HtmlPlugin = require('html-webpack-plugin');
 
-const scan_js   = ['./src/js', /\.ts$/i];
-const scan_scss = ['./src/scss', /\.scss$/i];
-const scan_html = ['./src/templates', /\.html$/i];
+const scan_js   = [helpers.root('src/js'), /\.ts$/i];
+const scan_css  = [helpers.root('src/css'), /\.scss$/i];
+const scan_html = [helpers.root('src/templates'), /\.html$/i];
 
-const polyfill = helpers.root('src/js/common/polyfill.ts');
-const vendor = helpers.root('src/js/common/vendor.ts');
-const common_style = helpers.root('src/scss/common/common.scss');
+const polyfill     = helpers.root('src/js/common/polyfill.ts');
+const vendor       = helpers.root('src/js/common/vendor.ts');
+const common_style = helpers.root('src/css/common/common.scss');
 
 const commonEntries = {
     'js/common/polyfill': [polyfill],
@@ -28,7 +28,7 @@ function getFiles(dirPath = './', ext = /\.html$/i, result = {}) {
         if (stats && stats.isFile()) {
             if (ext.test(fullPath)) result[entry] = fullPath;
         } else if (stats && stats.isDirectory() && entry !== 'common') {
-            walkDir(fullPath, ext, result);
+            getFiles(fullPath, ext, result);
         }
     }
     return result;
@@ -39,22 +39,22 @@ function getJS () {
     let result = getFiles(...scan_js);
 
     for (let js in result) {
-        let fileName = js.substr(0, js.indexOf('.'));
         let fullPath = result[js];
-        entires[`js\\${fileName}`] = [helpers.root(fullPath)];
+        let keyName = fullPath.substr(fullPath.indexOf('\\js\\'), fullPath.lastIndexOf('.')).substr(1);
+        entires[keyName] = [fullPath];
     }
 
     return entires;
 }
 
-function getSCSS () {
+function getCSS () {
     let entires = [];
-    let result = getFiles(...scan_scss);
+    let result = getFiles(...scan_css);
 
-    for (let scss in result) {
-        let fileName = scss.substr(0, scss.indexOf('.'));
-        let fullPath = result[scss];
-        entires[`css\\${fileName}`] = [helpers.root(fullPath)];
+    for (let css in result) {
+        let fullPath = result[css];
+        let keyName = fullPath.substr(fullPath.indexOf('\\css\\'), fullPath.lastIndexOf('.')).substr(1);
+        entires[keyName] = [fullPath];
     }
 
     return entires;
@@ -65,8 +65,10 @@ function getHTML () {
     let result = getFiles(...scan_html);
 
     for (let html in result) {
+        let str = '\\templates\\';
         let fullPath = result[html];
-        entires[html] = [helpers.root(fullPath)];
+        let keyName = fullPath.substr(fullPath.indexOf(str) + str.length, fullPath.lastIndexOf('.'));
+        entires[keyName] = [fullPath];
     }
 
     return entires;
@@ -74,9 +76,9 @@ function getHTML () {
 
 function getEntires () {
     let js   = getJS();
-    let scss = getSCSS();
+    let css  = getCSS();
     let html = getHTML();
-    return { ...js, ...scss, ...html };
+    return { ...js, ...css, ...html };
 }
 
 function getHTMLPlugin () {
@@ -84,7 +86,6 @@ function getHTMLPlugin () {
     let result = getFiles(...scan_html);
 
     for (let html in result) {
-        let fileName = html.substr(0, html.indexOf('.'));
         let fullPath = result[html];
         plugins.push( new HtmlPlugin({
             filename: html,
@@ -92,8 +93,8 @@ function getHTMLPlugin () {
             chunks: [
                 'js/common/manifest',
                 ...Object.keys(commonEntries),
-                `css\\${fileName}`,
-                `js\\${fileName}`,
+                `css\\${html}`,
+                `js\\${html}`,
             ],
             chunksSortMode: 'dependency',
             inject: 'body',
