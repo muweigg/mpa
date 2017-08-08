@@ -50,7 +50,7 @@ function getJS () {
 }
 
 function getCSS () {
-    let entires = [];
+    let entires = {};
     let result = getFiles(...scan_css);
 
     for (let css in result) {
@@ -65,7 +65,7 @@ function getCSS () {
 }
 
 function getHTML () {
-    let entires = [];
+    let entires = {};
     let result = getFiles(...scan_html);
 
     for (let html in result) {
@@ -101,6 +101,7 @@ function getHTMLPlugin () {
                 ...Object.keys(commonEntries),
                 `css\\${keyName}`,
                 `js\\${keyName}`,
+                html,
             ],
             chunksSortMode: 'dependency',
             inject: 'body',
