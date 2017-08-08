@@ -40,7 +40,9 @@ function getJS () {
 
     for (let js in result) {
         let fullPath = result[js];
-        let keyName = fullPath.substr(fullPath.indexOf('\\js\\'), fullPath.lastIndexOf('.')).substr(1);
+        let s = fullPath.indexOf('\\js\\');
+        let e = fullPath.lastIndexOf('.') - s;
+        let keyName = fullPath.substr(s, e).substr(1);
         entires[keyName] = [fullPath];
     }
 
@@ -53,7 +55,9 @@ function getCSS () {
 
     for (let css in result) {
         let fullPath = result[css];
-        let keyName = fullPath.substr(fullPath.indexOf('\\css\\'), fullPath.lastIndexOf('.')).substr(1);
+        let s = fullPath.indexOf('\\css\\');
+        let e = fullPath.lastIndexOf('.') - s;
+        let keyName = fullPath.substr(s, e).substr(1);
         entires[keyName] = [fullPath];
     }
 
@@ -65,9 +69,10 @@ function getHTML () {
     let result = getFiles(...scan_html);
 
     for (let html in result) {
-        let str = '\\templates\\';
         let fullPath = result[html];
-        let keyName = fullPath.substr(fullPath.indexOf(str) + str.length, fullPath.lastIndexOf('.'));
+        let str = '\\templates\\';
+        let s = fullPath.indexOf(str) + str.length;
+        let keyName = fullPath.substr(s);
         entires[keyName] = [fullPath];
     }
 
@@ -87,14 +92,15 @@ function getHTMLPlugin () {
 
     for (let html in result) {
         let fullPath = result[html];
+        let keyName = html.substr(0, html.lastIndexOf('.'));
         plugins.push( new HtmlPlugin({
             filename: html,
             template: fullPath,
             chunks: [
                 'js/common/manifest',
                 ...Object.keys(commonEntries),
-                `css\\${html}`,
-                `js\\${html}`,
+                `css\\${keyName}`,
+                `js\\${keyName}`,
             ],
             chunksSortMode: 'dependency',
             inject: 'body',
