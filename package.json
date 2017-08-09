@@ -21,8 +21,8 @@
   "devDependencies": {
     "@types/core-js": "^0.9.42",
     "@types/jquery": "^3.2.11",
-    "@types/lodash": "^4.14.71",
-    "@types/node": "^8.0.19",
+    "@types/lodash": "^4.14.72",
+    "@types/node": "^8.0.20",
     "add-asset-html-webpack-plugin": "^2.1.0",
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.25.0",
@@ -52,8 +52,8 @@
     "tslib": "^1.7.1",
     "typescript": "^2.4.2",
     "url-loader": "^0.5.9",
-    "webpack": "^3.5.1",
-    "webpack-dev-server": "^2.7.0",
+    "webpack": "^3.5.2",
+    "webpack-dev-server": "^2.7.1",
     "webpack-dll-bundles-plugin": "^1.0.0-beta.5",
     "webpack-merge": "^4.1.0",
     "webpack-spritesmith": "^0.3.3"
