@@ -20,6 +20,8 @@ const commonEntries = {
     'css/common': [common_style],
 }
 
+let entriesDict = {};
+
 function getFiles(dirPath = './', ext = /\.html$/i, result = {}) {
     let entires = fs.readdirSync(dirPath);
     for (let entry of entires) {
@@ -34,6 +36,23 @@ function getFiles(dirPath = './', ext = /\.html$/i, result = {}) {
     return result;
 }
 
+function getHTML () {
+    let entires = {};
+    let result = getFiles(...scan_html);
+
+    for (let html in result) {
+        let fullPath = result[html];
+        let str = '\\templates\\';
+        let s = fullPath.indexOf(str) + str.length;
+        let keyName = fullPath.substr(s);
+        entires[keyName] = [fullPath];
+        entriesDict[`css\\${keyName.substr(0, keyName.lastIndexOf('.'))}`] = true;
+        entriesDict[`js\\${keyName.substr(0, keyName.lastIndexOf('.'))}`] = true;
+    }
+
+    return entires;
+}
+
 function getJS () {
     let entires = {};
     let result = getFiles(...scan_js);
@@ -43,7 +62,8 @@ function getJS () {
         let s = fullPath.indexOf('\\js\\');
         let e = fullPath.lastIndexOf('.') - s;
         let keyName = fullPath.substr(s, e).substr(1);
-        entires[keyName] = [fullPath];
+        if (entriesDict[keyName])
+            entires[keyName] = [fullPath];
     }
 
     return entires;
@@ -58,31 +78,17 @@ function getCSS () {
         let s = fullPath.indexOf('\\css\\');
         let e = fullPath.lastIndexOf('.') - s;
         let keyName = fullPath.substr(s, e).substr(1);
-        entires[keyName] = [fullPath];
-    }
-
-    return entires;
-}
-
-function getHTML () {
-    let entires = {};
-    let result = getFiles(...scan_html);
-
-    for (let html in result) {
-        let fullPath = result[html];
-        let str = '\\templates\\';
-        let s = fullPath.indexOf(str) + str.length;
-        let keyName = fullPath.substr(s);
-        entires[keyName] = [fullPath];
+        if (entriesDict[keyName])
+            entires[keyName] = [fullPath];
     }
 
     return entires;
 }
 
 function getEntires () {
+    let html = getHTML();
     let js   = getJS();
     let css  = getCSS();
-    let html = getHTML();
     return { ...js, ...css, ...html };
 }
 
