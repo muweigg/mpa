@@ -45,9 +45,10 @@ function getHTML () {
         let str = '\\templates\\';
         let s = fullPath.indexOf(str) + str.length;
         let keyName = fullPath.substr(s);
+        let key = keyName.substr(0, keyName.lastIndexOf('.'));
         entires[keyName] = [fullPath];
-        entriesDict[`css\\${keyName.substr(0, keyName.lastIndexOf('.'))}`] = true;
-        entriesDict[`js\\${keyName.substr(0, keyName.lastIndexOf('.'))}`] = true;
+        entriesDict[`css\\${key}`] = true;
+        entriesDict[`js\\${key}`] = true;
     }
 
     return entires;
