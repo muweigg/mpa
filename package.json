@@ -1,8 +1,7 @@
 {
   "name": "mpa",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "This is a quick start creating a multi-page application with webpack.",
   "scripts": {
     "build": "webpack --config config/webpack.prod.ts --progress",
     "serve": "webpack-dev-server --config config/webpack.dev.ts --progress --profile --watch",
@@ -14,6 +13,7 @@
     "core-js": "^2.5.0",
     "jquery": "^3.2.1",
     "lodash": "^4.17.4",
+    "purecss": "^1.0.0",
     "rxjs": "^5.4.3",
     "vue": "^2.4.2",
     "zone.js": "^0.8.16"
