@@ -2,11 +2,14 @@
     "compilerOptions": {
         "target": "es5",
         "module": "commonjs",
+        "moduleResolution": "node",
         "lib": [
             "dom",
             "esnext"
         ],
-        "moduleResolution": "node",
+        "typeRoots": [
+            "node_modules/@types"
+        ],
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
         "sourceMap": true,
