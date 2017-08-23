@@ -1,3 +1,7 @@
 {
-    "presets": [ "babili" ]
+    "env": {
+        "production": {
+            "presets": [ "babili" ]
+        }
+    }
 }
