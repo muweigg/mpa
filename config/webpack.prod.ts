@@ -38,6 +38,7 @@ export default webpackMerge(config({ env: ENV }), {
         new CleanPlugin(['dist'], { root: helpers.root() }),
         new ExtractTextPlugin('[name].[contenthash].css'),
         new webpack.optimize.UglifyJsPlugin({
+            // include: /\/(manifest|polyfill|vendor)/,
             mangle: { screw_ie8: true },
             compress: { screw_ie8: true, warnings: false, drop_console: true },
             sourceMap: false
