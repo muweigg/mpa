@@ -4,3 +4,4 @@ import 'script-loader!lodash/lodash.min';
 import 'script-loader!jquery/dist/jquery.slim.min';
 import 'script-loader!vue/dist/vue.min';
 import 'script-loader!axios/dist/axios.min';
+import 'script-loader!./third-party/materialize.min';

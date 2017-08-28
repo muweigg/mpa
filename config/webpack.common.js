@@ -56,8 +56,8 @@ module.exports = function(options) {
                     context: '',
                     htmlLoader: htmlLoaderConfig,
                     sassLoader: { sourceMap: false, includePaths: [] },
-                    urlLoader: { name: '[path][name].[hash].[ext]', outputPath: url => url.replace('src', '.') },
-                    fileLoader: { name: '[path][name].[hash].[ext]', outputPath: url => url.replace('src', '.') },
+                    urlLoader: { name: '[path][name].[hash].[ext]', outputPath: url => url.replace(/src|node_modules/, '.') },
+                    fileLoader: { name: '[path][name].[hash].[ext]', outputPath: url => url.replace(/src|node_modules/, '.') },
                 }
             }),
             new webpack.DefinePlugin({
