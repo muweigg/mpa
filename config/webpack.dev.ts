@@ -25,10 +25,5 @@ export default webpackMerge(config({ env: ENV }), {
             },
         ]
     },
-    plugins: [
-        new webpack.LoaderOptionsPlugin({
-            debug: true,
-            options: {}
-        }),
-    ]
+    plugins: []
 });
