@@ -20,6 +20,7 @@ export default webpackMerge(config({ env: ENV }), {
                 test: /\.(s[ac]|c)ss$/,
                 use: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
+                    publicPath: '.',
                     use: ['css-loader?importLoaders=1', 'postcss-loader', 'sass-loader']
                 }),
                 exclude: [fileUtils.common_style]
@@ -28,6 +29,7 @@ export default webpackMerge(config({ env: ENV }), {
                 test: /\.(s[ac]|c)ss$/,
                 use: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
+                    publicPath: '.',
                     use: ['css-loader?importLoaders=1', 'postcss-loader', 'sass-loader']
                 }),
                 include: [fileUtils.common_style]
