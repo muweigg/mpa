@@ -9,10 +9,10 @@ function getConfig (name) {
         },
         target: {
             image: helpers.root(`src/assets/images/${name}.png`),
-            css: helpers.root(`src/sprites/_${name}.scss`)
+            css: helpers.root(`src/css/common/_/_${name}.scss`)
         },
         apiOptions: {
-            cssImageRef: `../assets/images/${name}.png`
+            cssImageRef: `../../assets/images/${name}.png`
         },
         spritesmithOptions: {
             padding: 10,
