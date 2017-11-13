@@ -1,4 +1,16 @@
 @import './third-party/pure/pure';
+@import '../../sprites/icons';
+
+i.icon {
+    display: inline-block;
+}
+
+@each $icon in $spritesheet-sprites {
+    $icon-name: nth($icon, 10);
+    .icon-#{$icon-name} {
+        @include sprite($icon);
+    }
+}
 
 body {
     text-align: center;
