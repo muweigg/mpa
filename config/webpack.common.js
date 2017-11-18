@@ -40,26 +40,40 @@ module.exports = function(options) {
         module: {
             rules: [
                 { test: /\.ts$/, use: ['ts-loader'] },
-                { test: /\.html$/, use: ['html-loader', `nunjucks-html-loader?${JSON.stringify(nunjucksConfig)}`] },
+                {
+                    test: /\.html$/,
+                    use: [{
+                        loader: 'html-loader',
+                        options: htmlLoaderConfig,
+                    }, `nunjucks-html-loader?${JSON.stringify(nunjucksConfig)}`]
+                },
                 { test: /\.json$/, use: ['json-loader'] },
-                { test: /\.(jpe?g|png|gif|svg)$/, use: 'url-loader?limit=10240' },
-                { test: /\.(eot|woff2?|ttf)([\?]?.*)$/, use: 'file-loader' },
+                {
+                    test: /\.(jpe?g|png|gif|svg)$/,
+                    use: [{
+                        loader: 'url-loader',
+                        options: {
+                            limit: 10240,
+                            name: '[path][name].[hash].[ext]',
+                            outputPath: url => url.replace(/src|node_modules/, '.')
+                        }
+                    }]
+                },
+                {
+                    test: /\.(eot|woff2?|ttf)([\?]?.*)$/,
+                    use: [{
+                        loader: 'file-loader',
+                        options: {
+                            name: '[path][name].[hash].[ext]',
+                            outputPath: url => url.replace(/src|node_modules/, '.')
+                        }
+                    }]
+                },
             ]
         },
 
         plugins: [
             new webpack.NoEmitOnErrorsPlugin(),
-            new webpack.LoaderOptionsPlugin({
-                debug: !isProd,
-                minimize: isProd,
-                options: {
-                    context: '',
-                    htmlLoader: htmlLoaderConfig,
-                    sassLoader: { sourceMap: false, includePaths: [] },
-                    urlLoader: { name: '[path][name].[hash].[ext]', outputPath: url => url.replace(/src|node_modules/, '.') },
-                    fileLoader: { name: '[path][name].[hash].[ext]', outputPath: url => url.replace(/src|node_modules/, '.') },
-                }
-            }),
             new webpack.DefinePlugin({
                 'PROD_ENV': JSON.stringify(isProd)
             }),
