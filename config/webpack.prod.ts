@@ -5,6 +5,7 @@ const webpackMerge = require('webpack-merge');
 const CleanPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const SuppressExtractedTextChunksWebpackPlugin = require('./plugins/SuppressExtractedTextChunksWebpackPlugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 
 const ENV = process.env.ENV = process.env.NODE_ENV = "production";
@@ -40,15 +41,17 @@ export default webpackMerge(config({ env: ENV }), {
     plugins: [
         new CleanPlugin(['dist'], { root: helpers.root() }),
         new ExtractTextPlugin('[name].[contenthash].css'),
-        new webpack.optimize.UglifyJsPlugin({
-            // include: /\/(manifest|polyfill|vendor)/,
-            mangle: { screw_ie8: true },
-            compress: { screw_ie8: true, warnings: false, drop_console: true },
-            output: { comments: false },
-            sourceMap: false
-        }),
         new SuppressExtractedTextChunksWebpackPlugin(),
         new webpack.optimize.ModuleConcatenationPlugin(),
+        new UglifyJsPlugin({
+            sourceMap: false,
+            parallel: true,
+            uglifyOptions: {
+                mangle: { ie8: true },
+                compress: { ie8: true, warnings: false, drop_console: true },
+                output: { comments: false },
+            }
+        }),
         // new ManifestPlugin(),
     ]
 });
