@@ -5,6 +5,7 @@ const webpackMerge = require('webpack-merge');
 const CleanPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const SuppressExtractedTextChunksWebpackPlugin = require('./plugins/SuppressExtractedTextChunksWebpackPlugin');
+const ManifestPlugin = require('webpack-manifest-plugin');
 
 const ENV = process.env.ENV = process.env.NODE_ENV = "production";
 const fileUtils = require('./fileUtils');
@@ -47,5 +48,6 @@ export default webpackMerge(config({ env: ENV }), {
         }),
         new SuppressExtractedTextChunksWebpackPlugin(),
         new webpack.optimize.ModuleConcatenationPlugin(),
+        // new ManifestPlugin(),
     ]
 });
