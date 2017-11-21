@@ -44,6 +44,7 @@ export default webpackMerge(config({ env: ENV }), {
             // include: /\/(manifest|polyfill|vendor)/,
             mangle: { screw_ie8: true },
             compress: { screw_ie8: true, warnings: false, drop_console: true },
+            output: { comments: false },
             sourceMap: false
         }),
         new SuppressExtractedTextChunksWebpackPlugin(),
