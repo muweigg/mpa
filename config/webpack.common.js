@@ -79,7 +79,7 @@ module.exports = function(options) {
             }),
             /* new CopyPlugin([{
                 from: helpers.root('src/assets'),
-                to: 'assets',
+                to: 'assets/[path][name].[hash].[ext]',
                 ignore: ['favicon.ico']
             }]), */
             new webpack.optimize.CommonsChunkPlugin({
