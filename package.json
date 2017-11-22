@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "This is a quick start creating a multi-page application with webpack.",
   "scripts": {
+    "stats": "webpack --config config/webpack.prod.ts --progress --json > stats.json",
     "build": "webpack --config config/webpack.prod.ts --progress",
     "serve": "webpack-dev-server --config config/webpack.dev.ts --progress --profile --watch",
     "serve:hot": "npm run serve -- --hot --inline"
