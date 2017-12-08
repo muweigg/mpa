@@ -1,1 +1,5 @@
-declare var PROD_ENV: boolean;
+declare function isIE(): number | undefined;
+
+interface Window {
+    isIE(): number | undefined;
+}
