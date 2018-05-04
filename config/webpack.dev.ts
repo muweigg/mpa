@@ -4,7 +4,6 @@ const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
 const webpackMergeDll = webpackMerge.strategy({ plugins: 'replace' });
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
-const DllBundlesPlugin = require('webpack-dll-bundles-plugin').DllBundlesPlugin;
 
 const ENV = process.env.ENV = process.env.NODE_ENV = 'development';
 const fileUtils = require('./fileUtils');
