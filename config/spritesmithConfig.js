@@ -18,7 +18,7 @@ function getConfig (name) {
             padding: 10,
             algorithm: 'top-down',
             algorithmOpts: { sort: true },
-            exportOpts: { quality: 75 }
+            exportOpts: { quality: 100 }
         }
     })
 }

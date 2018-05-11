@@ -2,9 +2,9 @@ const helpers = require('./helpers');
 const webpack = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
-const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
-const InlineManifestWebpackPlugin = require('inline-manifest-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const { VueLoaderPlugin } = require('vue-loader')
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const devServer = require('./devServer');
 const spritesmithConfig = require('./spritesmithConfig');
@@ -13,7 +13,7 @@ const nunjucksConfig = require('./nunjucksConfig');
 
 const fileUtils = require('./fileUtils');
 
-module.exports = function(options) {
+module.exports = function (options) {
 
     const isProd = options.env === 'production';
 
@@ -29,18 +29,80 @@ module.exports = function(options) {
         output: {
             path: helpers.root('dist'),
             filename: '[name].bundle.js',
-            chunkFilename: '[id].chunk.js',
+            chunkFilename: '[id].[name].chunk.js',
             sourceMapFilename: '[file].map',
         },
 
         resolve: {
             extensions: ['.ts', '.js', '.vue'],
-            modules: [helpers.root('src'), helpers.root('node_modules')]
+            modules: [helpers.root('src'), helpers.root('node_modules')],
+            alias: {
+                'vue$': 'vue/dist/vue.esm.js'
+            }
+        },
+
+        optimization: {
+            runtimeChunk: { name: 'js\\runtime' },
+            splitChunks: {
+                cacheGroups: {
+                    vendorJS: {
+                        test: /[\\/]node_modules[\\/].*\.(t|j)sx?$|[\\/]common[\\/].*\.(t|j)s$/,
+                        name: 'js\\vendors',
+                        chunks: 'initial',
+                        priority: -10,
+                        enforce: true
+                    },
+                    vendorCSS: {
+                        test: /[\\/]node_modules[\\/].*\.s?(a|c)ss$|[\\/]common[\\/].*\.s?(a|c)ss$/,
+                        name: 'css\\vendors',
+                        chunks: 'initial',
+                        priority: -10,
+                        enforce: true
+                    },
+                    components: {
+                        test: /[\\/]components[\\/].*\.vue$/,
+                        name: 'components\\components',
+                        chunks: 'initial',
+                        priority: -20,
+                        enforce: true
+                    },
+                }
+            },
         },
 
         module: {
             rules: [
-                { test: /\.ts$/, use: ['ts-loader'] },
+                {
+                    test: /\.ts$/,
+                    use: [
+                        'cache-loader',
+                        {
+                            loader: 'thread-loader',
+                            options: {
+                                workers: require('os').cpus().length - 1,
+                            },
+                        },
+                        {
+                            loader: 'ts-loader',
+                            options: {
+                                transpileOnly: true,
+                                happyPackMode: true,
+                                appendTsSuffixTo: [/\.vue$/],
+                            }
+                        }
+                    ]
+                },
+                {
+                    test: /\.vue$/,
+                    use: [
+                        {
+                            loader: 'vue-loader',
+                            options: {
+                                ts: 'ts-loader'
+                            }
+                        }
+                    ]
+                },
                 {
                     test: /\.html$/,
                     use: [{
@@ -55,7 +117,7 @@ module.exports = function(options) {
                         loader: 'url-loader',
                         options: {
                             limit: 10240,
-                            name: '[path][name].[hash].[ext]',
+                            name: '[path][name].[hash:12].[ext]',
                             outputPath: url => url.replace(/^src/, '.')
                         }
                     }]
@@ -65,7 +127,7 @@ module.exports = function(options) {
                     use: [{
                         loader: 'file-loader',
                         options: {
-                            name: '[path][name].[hash].[ext]',
+                            name: '[path][name].[hash:12].[ext]',
                             outputPath: url => url.replace(/^src/, '.')
                         }
                     }]
@@ -74,37 +136,10 @@ module.exports = function(options) {
         },
 
         plugins: [
-            new webpack.NoEmitOnErrorsPlugin(),
-            new webpack.DefinePlugin({
-                'PROD_ENV': JSON.stringify(isProd)
-            }),
-            /* new CopyPlugin([{
-                from: helpers.root('src/assets'),
-                to: 'assets/[path][name].[hash].[ext]',
-                ignore: ['favicon.ico']
-            }]), */
-            new webpack.optimize.CommonsChunkPlugin({
-                name: 'polyfills',
-                chunks: ['polyfills'],
-            }),
-            new webpack.optimize.CommonsChunkPlugin({
-                name: 'vendor',
-                chunks: ['vendor'],
-                minChunks: module => /node_modules/.test(module.resource)
-            }),
-            new webpack.optimize.CommonsChunkPlugin({
-                name: 'js/common/manifest',
-                minChunks: Infinity
-            }),
-            new ScriptExtHtmlWebpackPlugin({
-                sync: /manifest|polyfill|vendor/,
-                defaultAttribute: 'async',
-            }),
+            new VueLoaderPlugin(),
+            new ForkTsCheckerWebpackPlugin({ vue: true }),
             ...fileUtils.getHTMLPlugin(),
             ...spritesmithConfig,
-            /**
-             * If you are interested to drill down to exact dependencies, try analyzing your bundle without ModuleConcatenationPlugin. See issue https://github.com/webpack-contrib/webpack-bundle-analyzer/issues/115 for more discussion.
-             */
             // new BundleAnalyzerPlugin(),
         ]
     }

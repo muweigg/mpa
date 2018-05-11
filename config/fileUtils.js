@@ -10,14 +10,10 @@ const scan_js   = [helpers.root('src/js'), /\.ts$/i];
 const scan_css  = [helpers.root('src/css'), /\.scss$/i];
 const scan_html = [helpers.root('src/templates'), /\.html$/i];
 
-const polyfill     = helpers.root('src/js/common/polyfill.ts');
-const vendor       = helpers.root('src/js/common/vendor.ts');
-const common_style = helpers.root('src/css/common/common.scss');
+const vendors_style = helpers.root('src/css/common/vendors.scss');
 
 const commonEntries = {
-    'js/common/polyfill': [polyfill],
-    'js/common/vendor': [vendor],
-    'css/common': [common_style],
+    'css\\vendors': [vendors_style],
 }
 
 let entriesDict = {};
@@ -90,7 +86,7 @@ function getEntires () {
     let html = getHTML();
     let js   = getJS();
     let css  = getCSS();
-    return { ...js, ...css, ...html };
+    return {...js, ...css}
 }
 
 function getHTMLPlugin () {
@@ -104,12 +100,14 @@ function getHTMLPlugin () {
             filename: html,
             template: fullPath,
             chunks: [
-                'js/common/manifest',
-                ...Object.keys(commonEntries),
+                'css\\vendors',
+                'js\\runtime',
+                'js\\vendors',
+                'components\\components',
                 `css\\${keyName}`,
                 `js\\${keyName}`,
-                html,
             ],
+            excludeAssets: [/^css.*\.js$/],
             chunksSortMode: 'dependency',
             inject: 'body',
         }) );
@@ -121,4 +119,4 @@ function getHTMLPlugin () {
 exports.getEntires = getEntires;
 exports.getHTMLPlugin = getHTMLPlugin;
 exports.commonEntries = commonEntries;
-exports.common_style = common_style;
+exports.vendors_style = vendors_style;
