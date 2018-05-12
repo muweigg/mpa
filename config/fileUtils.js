@@ -107,7 +107,6 @@ function getHTMLPlugin () {
                 `css\\${keyName}`,
                 `js\\${keyName}`,
             ],
-            excludeAssets: [/^css.*\.js$/],
             chunksSortMode: 'dependency',
             inject: 'body',
         }) );

@@ -6,8 +6,7 @@ const CleanPlugin = require('clean-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const ExtraneousFileCleanupPlugin = require('webpack-extraneous-file-cleanup-plugin');
-const HtmlWebpackExcludeAssetsPlugin = require('html-webpack-exclude-assets-plugin');
+const SuppressExtractedTextChunksWebpackPlugin = require('./plugins/SuppressExtractedTextChunksWebpackPlugin');
 // const ManifestPlugin = require('webpack-manifest-plugin');
 
 const ENV = process.env.ENV = process.env.NODE_ENV = "production";
@@ -54,15 +53,11 @@ module.exports = webpackMerge(config({ env: ENV }), {
     },
     plugins: [
         new CleanPlugin(['dist'], { root: helpers.root() }),
-        new HtmlWebpackExcludeAssetsPlugin(),
-        new ExtraneousFileCleanupPlugin({
-            extensions: ['.js'],
-            paths: ['/css']
-        }),
         new MiniCssExtractPlugin({
             filename: '[name].[contenthash:12].css',
             chunkFilename: '[name].[contenthash:12].css'
         }),
+        new SuppressExtractedTextChunksWebpackPlugin(),
         // new ManifestPlugin(),
     ]
 });
