@@ -31,7 +31,12 @@ module.exports = webpackMerge(config({ env: ENV }), {
                     ie8: true,
                 }
             }),
-            new OptimizeCSSAssetsPlugin({ cssProcessorOptions: { discardComments: { removeAll: true } } })
+            new OptimizeCSSAssetsPlugin({
+                cssProcessorOptions: {
+                    zindex: false,
+                    discardComments: { removeAll: true },
+                }
+            }),
         ]
     },
 
