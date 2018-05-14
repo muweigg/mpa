@@ -15,8 +15,6 @@ const fileUtils = require('./fileUtils');
 
 module.exports = function (options) {
 
-    const isProd = options.env === 'production';
-
     return {
 
         devServer: devServer,
