@@ -5,6 +5,7 @@ const webpackMerge = require('webpack-merge');
 const CleanPlugin = require('clean-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const InlineManifestWebpackPlugin = require('inline-manifest-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const SuppressExtractedTextChunksWebpackPlugin = require('./plugins/SuppressExtractedTextChunksWebpackPlugin');
 // const ManifestPlugin = require('webpack-manifest-plugin');
@@ -83,6 +84,7 @@ module.exports = webpackMerge(config(), {
             chunkFilename: '[name].[contenthash:12].css'
         }),
         new SuppressExtractedTextChunksWebpackPlugin(),
+        new InlineManifestWebpackPlugin('js\\runtime'),
         // new ManifestPlugin(),
     ]
 });
