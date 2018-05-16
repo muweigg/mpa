@@ -12,8 +12,11 @@ const htmlLoaderConfig = require('./htmlLoaderConfig');
 const nunjucksConfig = require('./nunjucksConfig');
 
 const fileUtils = require('./fileUtils');
+const tsConfigPath = 'tsconfig.json';
 
 module.exports = function (options) {
+
+    const supportES2015 = helpers.supportES2015(tsConfigPath);
 
     return {
 
@@ -34,9 +37,7 @@ module.exports = function (options) {
         resolve: {
             extensions: ['.ts', '.js', '.vue'],
             modules: [helpers.root('src'), helpers.root('node_modules')],
-            alias: {
-                'vue$': 'vue/dist/vue.esm.js'
-            }
+            alias: Object.assign({}, helpers.rxjsAlias(supportES2015), { 'vue$': 'vue/dist/vue.esm.js' })
         },
 
         optimization: {

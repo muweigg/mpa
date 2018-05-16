@@ -9,10 +9,34 @@ const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const SuppressExtractedTextChunksWebpackPlugin = require('./plugins/SuppressExtractedTextChunksWebpackPlugin');
 // const ManifestPlugin = require('webpack-manifest-plugin');
 
-const ENV = process.env.ENV = process.env.NODE_ENV = "production";
 const fileUtils = require('./fileUtils');
+const tsConfigPath = 'tsconfig.json';
+const supportES2015 = helpers.supportES2015(tsConfigPath);
 
-module.exports = webpackMerge(config({ env: ENV }), {
+function getUglifyOptions(supportES2015) {
+    const uglifyCompressOptions = {
+        pure_getters: true,
+        // PURE comments work best with 3 passes.
+        // See https://github.com/webpack/webpack/issues/2899#issuecomment-317425926.
+        passes: 3,
+        drop_console: true,
+        warnings: false
+    };
+
+    return {
+        ecma: supportES2015 ? 6 : 5,
+        warnings: false,
+        ie8: false,
+        mangle: true,
+        compress: uglifyCompressOptions,
+        output: {
+            ascii_only: true,
+            comments: false
+        }
+    };
+}
+
+module.exports = webpackMerge(config(), {
 
     output: {
         filename: '[name].[chunkhash:12].js',
@@ -20,16 +44,11 @@ module.exports = webpackMerge(config({ env: ENV }), {
     },
     
     optimization: {
-
         minimizer: [
             new UglifyJsPlugin({
                 sourceMap: false,
                 parallel: true,
-                uglifyOptions: {
-                    compress: { warnings: false, drop_console: true },
-                    output: { comments: false },
-                    ie8: true,
-                }
+                uglifyOptions: getUglifyOptions(supportES2015),
             }),
             new OptimizeCSSAssetsPlugin({
                 cssProcessorOptions: {
@@ -56,6 +75,7 @@ module.exports = webpackMerge(config({ env: ENV }), {
             },
         ]
     },
+
     plugins: [
         new CleanPlugin(['dist'], { root: helpers.root() }),
         new MiniCssExtractPlugin({
