@@ -8,7 +8,7 @@ const fileUtils = require('./fileUtils');
 
 module.exports = webpackMerge(config(), {
 
-    devtool: "source-map",
+    devtool: "eval",
 
     module: {
         rules: [
