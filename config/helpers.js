@@ -31,7 +31,7 @@ function supportES2015(tsConfigPath) {
   return supportES2015['supportES2015'];
 }
 
-function readTsConfig(tsConfigPath) {
+function readTsConfig(tsConfigPath = 'tsconfig.json') {
   const configResult = ts.readConfigFile(tsConfigPath, ts.sys.readFile);
   return ts.parseJsonConfigFileContent(configResult.config, ts.sys,
     path.dirname(tsConfigPath), undefined, tsConfigPath);

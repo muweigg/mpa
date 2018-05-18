@@ -11,8 +11,7 @@ const SuppressExtractedTextChunksWebpackPlugin = require('./plugins/SuppressExtr
 // const ManifestPlugin = require('webpack-manifest-plugin');
 
 const fileUtils = require('./fileUtils');
-const tsConfigPath = 'tsconfig.json';
-const supportES2015 = helpers.supportES2015(tsConfigPath);
+const supportES2015 = helpers.supportES2015();
 
 function getUglifyOptions(supportES2015) {
     const uglifyCompressOptions = {

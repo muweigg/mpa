@@ -12,11 +12,10 @@ const htmlLoaderConfig = require('./htmlLoaderConfig');
 const nunjucksConfig = require('./nunjucksConfig');
 
 const fileUtils = require('./fileUtils');
-const tsConfigPath = 'tsconfig.json';
 
 module.exports = function (options) {
 
-    const supportES2015 = helpers.supportES2015(tsConfigPath);
+    const supportES2015 = helpers.supportES2015();
 
     return {
 
