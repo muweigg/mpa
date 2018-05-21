@@ -2,11 +2,11 @@
 module.exports = class SuppressExtractedTextChunksWebpackPlugin {
 
     constructor () {
-        this.PluginName = 'SuppressExtractedTextChunksWebpackPlugin';
+        this.plugin = { name: 'SuppressExtractedTextChunksWebpackPlugin' };
     }
 
     apply (compiler) {
-        compiler.hooks.compilation.tap(this.PluginName, this.applyCompilation.bind(this));
+        compiler.hooks.compilation.tap(this.plugin, this.applyCompilation.bind(this));
     }
 
     applyCompilation (compilation) {
@@ -20,7 +20,7 @@ module.exports = class SuppressExtractedTextChunksWebpackPlugin {
             }
         }
 
-        compilation.hooks.htmlWebpackPluginAlterAssetTags.tapAsync(this.PluginName, (htmlPluginData, callback) => {
+        compilation.hooks.htmlWebpackPluginAlterAssetTags.tapAsync(this.plugin, (htmlPluginData, callback) => {
             const filterFn = (tag) =>
               !(tag.tagName === 'script' && (!tag.attributes.src || tag.attributes.src.match(/\.css$/)));
             htmlPluginData.head = htmlPluginData.head.filter(filterFn);
@@ -32,7 +32,7 @@ module.exports = class SuppressExtractedTextChunksWebpackPlugin {
             }
         });
 
-        compilation.hooks.afterSeal.tapAsync(this.PluginName, (callback) => {
+        compilation.hooks.afterSeal.tapAsync(this.plugin, (callback) => {
             compilation.chunks
                 .filter((chunk) => cssOnlyChunks.indexOf(chunk.name) !== -1)
                 .forEach((chunk) => {
