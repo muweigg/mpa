@@ -1,3 +1,4 @@
+const path = require('path');
 const helpers = require('./helpers');
 const webpack = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
@@ -104,9 +105,13 @@ module.exports = function (options) {
                 {
                     test: /\.html$/,
                     use: [{
-                        loader: 'html-loader',
-                        options: htmlLoaderConfig,
-                    }, `nunjucks-html-loader?${JSON.stringify(nunjucksConfig)}`]
+                            loader: 'html-loader',
+                            options: htmlLoaderConfig,
+                        },{
+                            loader: helpers.root('config/loaders/nunjucks-loader'),
+                            options: nunjucksConfig
+                        }
+                    ]
                 },
                 { test: /\.json$/, use: ['json-loader'] },
                 {
