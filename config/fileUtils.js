@@ -118,4 +118,4 @@ function getHTMLPlugin () {
 exports.getEntires = getEntires;
 exports.getHTMLPlugin = getHTMLPlugin;
 exports.commonEntries = commonEntries;
-exports.vendors_style = vendors_style;
+exports.common_style = common_style;
