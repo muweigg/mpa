@@ -45,14 +45,14 @@ module.exports = function (options) {
             splitChunks: {
                 cacheGroups: {
                     vendorJS: {
-                        test: /[\\/]node_modules[\\/].*\.(t|j)sx?$|[\\/]common[\\/].*\.(t|j)s$/,
+                        test: /[\\/](node_modules|common)[\\/].*\.(t|j)sx?$/,
                         name: 'js\\vendors',
                         chunks: 'initial',
                         priority: -10,
                         enforce: true
                     },
                     vendorCSS: {
-                        test: /[\\/]node_modules[\\/].*\.s?(a|c)ss$|[\\/]common[\\/].*\.s?(a|c)ss$/,
+                        test: /[\\/](node_modules|common)[\\/].*\.s?(a|c)ss$/,
                         name: 'css\\vendors',
                         chunks: 'initial',
                         priority: -10,

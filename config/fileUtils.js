@@ -10,10 +10,10 @@ const scan_js   = [helpers.root('src/js'), /\.ts$/i];
 const scan_css  = [helpers.root('src/css'), /\.scss$/i];
 const scan_html = [helpers.root('src/templates'), /\.html$/i];
 
-const vendors_style = helpers.root('src/css/common/vendors.scss');
+const common_style = helpers.root('src/css/common/common.scss');
 
 const commonEntries = {
-    'css\\vendors': [vendors_style],
+    'css\\vendors': [common_style],
 }
 
 let entriesDict = {};
