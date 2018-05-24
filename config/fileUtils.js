@@ -10,12 +10,6 @@ const scan_js   = [helpers.root('src/js'), /\.ts$/i];
 const scan_css  = [helpers.root('src/css'), /\.scss$/i];
 const scan_html = [helpers.root('src/templates'), /\.html$/i];
 
-const common_style = helpers.root('src/css/common/common.scss');
-
-const commonEntries = {
-    'css\\vendors': [common_style],
-}
-
 let entriesDict = {};
 
 function getFiles(dirPath = './', ext = /\.html$/i, result = {}) {
@@ -100,9 +94,8 @@ function getHTMLPlugin () {
             filename: html,
             template: fullPath,
             chunks: [
-                'css\\vendors',
-                'js\\runtime',
-                'js\\vendors',
+                'runtime',
+                'vendors\\vendors',
                 'components\\components',
                 `css\\${keyName}`,
                 `js\\${keyName}`,
@@ -117,5 +110,3 @@ function getHTMLPlugin () {
 
 exports.getEntires = getEntires;
 exports.getHTMLPlugin = getHTMLPlugin;
-exports.commonEntries = commonEntries;
-exports.common_style = common_style;

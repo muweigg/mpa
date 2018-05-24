@@ -84,7 +84,7 @@ module.exports = webpackMerge(config(), {
             chunkFilename: '[name].[contenthash:12].css'
         }),
         new SuppressExtractedTextChunksWebpackPlugin(),
-        new InlineManifestWebpackPlugin('js\\runtime'),
+        new InlineManifestWebpackPlugin(),
         // new ManifestPlugin(),
     ]
 });
