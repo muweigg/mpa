@@ -85,10 +85,10 @@ function getEntires () {
 
 function getHTMLPlugin () {
     let plugins = [];
-    let result = getFiles(...scan_html);
+    let result = getHTML();
 
     for (let html in result) {
-        let fullPath = result[html];
+        let fullPath = result[html][0];
         let keyName = html.substr(0, html.lastIndexOf('.'));
         plugins.push( new HtmlPlugin({
             filename: html,
