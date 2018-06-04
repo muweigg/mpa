@@ -23,6 +23,7 @@ module.exports = function (options) {
         devServer: devServer,
 
         entry: {
+            ...fileUtils.commonEntrys,
             ...fileUtils.getEntires()
         },
 
@@ -43,18 +44,25 @@ module.exports = function (options) {
             runtimeChunk: { name: 'runtime' },
             splitChunks: {
                 cacheGroups: {
+                    common: {
+                        test: /[\\/]common[\\/].*\.(t|j)s$/,
+                        name: 'js\\common',
+                        chunks: 'initial',
+                        priority: -10,
+                        enforce: true
+                    },
                     vendors: {
-                        test: /[\\/](node_modules|common)[\\/]/,
+                        test: /[\\/]node_modules[\\/]|[\\/]common[\\/].*\.s?(a|c)ss$/,
                         name: 'vendors\\vendors',
                         chunks: 'initial',
                         priority: -10,
                         enforce: true
                     },
                     components: {
-                        test: /[\\/]components[\\/].*\.vue$/,
+                        test: /[\\/](components|node_modules)[\\/].*\.vue$/,
                         name: 'components\\components',
                         chunks: 'initial',
-                        priority: -20,
+                        priority: -5,
                         enforce: true
                     },
                 }

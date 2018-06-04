@@ -9,6 +9,9 @@ const HtmlPlugin = require('html-webpack-plugin');
 const scan_js   = [helpers.root('src/js'), /\.ts$/i];
 const scan_css  = [helpers.root('src/css'), /\.scss$/i];
 const scan_html = [helpers.root('src/templates'), /\.html$/i];
+const commonEntrys = {
+    'js\\common': [helpers.root('src/js/common/common.ts')]
+};
 
 let entriesDict = {};
 
@@ -97,6 +100,7 @@ function getHTMLPlugin () {
                 'runtime',
                 'vendors\\vendors',
                 'components\\components',
+                'js\\common',
                 `css\\${keyName}`,
                 `js\\${keyName}`,
             ],
@@ -110,3 +114,4 @@ function getHTMLPlugin () {
 
 exports.getEntires = getEntires;
 exports.getHTMLPlugin = getHTMLPlugin;
+exports.commonEntrys = commonEntrys;
