@@ -46,21 +46,21 @@ module.exports = function (options) {
                 cacheGroups: {
                     common: {
                         test: /[\\/]common[\\/].*\.(t|j)s$/,
-                        name: 'js\\common',
+                        name: 'js/common',
                         chunks: 'initial',
                         priority: -10,
                         enforce: true
                     },
                     vendors: {
                         test: /[\\/]node_modules[\\/]|[\\/]common[\\/].*\.s?(a|c)ss$/,
-                        name: 'vendors\\vendors',
+                        name: 'vendors/vendors',
                         chunks: 'initial',
                         priority: -10,
                         enforce: true
                     },
                     components: {
                         test: /[\\/](components|node_modules)[\\/].*\.vue$/,
-                        name: 'components\\components',
+                        name: 'components/components',
                         chunks: 'initial',
                         priority: -5,
                         enforce: true

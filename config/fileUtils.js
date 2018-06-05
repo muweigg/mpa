@@ -10,16 +10,16 @@ const scan_js   = [helpers.root('src/js'), /\.ts$/i];
 const scan_css  = [helpers.root('src/css'), /\.scss$/i];
 const scan_html = [helpers.root('src/templates'), /\.html$/i];
 const commonEntrys = {
-    'js\\common': [helpers.root('src/js/common/common.ts')]
+    'js/common': [helpers.root('src/js/common/common.ts')]
 };
 
 let entriesDict = {};
 
 function getFiles(dirPath = './', ext = /\.html$/i, result = {}) {
-    let entires = fs.readdirSync(dirPath);
+    const entires = fs.readdirSync(dirPath);
     for (let entry of entires) {
-        let fullPath = path.join(dirPath, entry);
-        let stats = fs.statSync(fullPath);
+        const fullPath = path.join(dirPath, entry);
+        const stats = fs.statSync(fullPath);
         if (stats && stats.isFile()) {
             if (ext.test(fullPath)) result[entry] = fullPath;
         } else if (stats && stats.isDirectory() && entry !== 'common') {
@@ -30,18 +30,18 @@ function getFiles(dirPath = './', ext = /\.html$/i, result = {}) {
 }
 
 function getHTML () {
-    let entires = {};
-    let result = getFiles(...scan_html);
+    const entires = {};
+    const result = getFiles(...scan_html);
 
     for (let html in result) {
-        let fullPath = result[html];
-        let str = '\\templates\\';
-        let s = fullPath.indexOf(str) + str.length;
-        let keyName = fullPath.substr(s);
-        let key = keyName.substr(0, keyName.lastIndexOf('.'));
+        const fullPath = result[html].replace(/\\+?/g, '/');
+        const str = fullPath.match(/[\\/]templates[\\/]/)[0];
+        const s = fullPath.indexOf(str) + str.length;
+        const keyName = fullPath.substr(s);
+        const key = keyName.substr(0, keyName.lastIndexOf('.'));
         entires[keyName] = [fullPath];
-        entriesDict[`css\\${key}`] = true;
-        entriesDict[`js\\${key}`] = true;
+        entriesDict[`css/${key}`] = true;
+        entriesDict[`js/${key}`] = true;
     }
 
     return entires;
@@ -49,13 +49,14 @@ function getHTML () {
 
 function getJS () {
     let entires = {};
-    let result = getFiles(...scan_js);
+    const result = getFiles(...scan_js);
 
     for (let js in result) {
-        let fullPath = result[js];
-        let s = fullPath.indexOf('\\js\\');
-        let e = fullPath.lastIndexOf('.') - s;
-        let keyName = fullPath.substr(s, e).substr(1);
+        const fullPath = result[js].replace(/\\+?/g, '/');
+        const str = fullPath.match(/[\\/]js[\\/]/)[0];
+        const s = fullPath.indexOf(str);
+        const e = fullPath.lastIndexOf('.') - s;
+        const keyName = fullPath.substr(s, e).substr(1);
         if (entriesDict[keyName])
             entires[keyName] = [fullPath];
     }
@@ -64,14 +65,15 @@ function getJS () {
 }
 
 function getCSS () {
-    let entires = {};
-    let result = getFiles(...scan_css);
+    const entires = {};
+    const result = getFiles(...scan_css);
 
     for (let css in result) {
-        let fullPath = result[css];
-        let s = fullPath.indexOf('\\css\\');
-        let e = fullPath.lastIndexOf('.') - s;
-        let keyName = fullPath.substr(s, e).substr(1);
+        const fullPath = result[css].replace(/\\+?/g, '/');
+        const str = fullPath.match(/[\\/]css[\\/]/)[0];
+        const s = fullPath.indexOf(str);
+        const e = fullPath.lastIndexOf('.') - s;
+        const keyName = fullPath.substr(s, e).substr(1);
         if (entriesDict[keyName])
             entires[keyName] = [fullPath];
     }
@@ -80,29 +82,29 @@ function getCSS () {
 }
 
 function getEntires () {
-    let html = getHTML();
-    let js   = getJS();
-    let css  = getCSS();
+    const html = getHTML();
+    const js   = getJS();
+    const css  = getCSS();
     return {...js, ...css}
 }
 
 function getHTMLPlugin () {
-    let plugins = [];
-    let result = getHTML();
+    const plugins = [];
+    const result = getHTML();
 
     for (let html in result) {
-        let fullPath = result[html][0];
-        let keyName = html.substr(0, html.lastIndexOf('.'));
+        const fullPath = result[html][0];
+        const keyName = html.substr(0, html.lastIndexOf('.'));
         plugins.push( new HtmlPlugin({
             filename: html,
             template: fullPath,
             chunks: [
                 'runtime',
-                'vendors\\vendors',
-                'components\\components',
-                'js\\common',
-                `css\\${keyName}`,
-                `js\\${keyName}`,
+                'vendors/vendors',
+                'components/components',
+                'js/common',
+                `css/${keyName}`,
+                `js/${keyName}`,
             ],
             chunksSortMode: 'dependency',
             inject: 'body',
