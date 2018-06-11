@@ -54,6 +54,7 @@ module.exports = webpackMerge(config(), {
             new OptimizeCSSAssetsPlugin({
                 cssProcessorOptions: {
                     zindex: false,
+                    reduceIdents: false,
                     discardComments: { removeAll: true },
                 }
             }),
