@@ -21,7 +21,12 @@ function getFiles(dirPath = './', ext = /\.html$/i, result = {}) {
         const fullPath = path.join(dirPath, entry);
         const stats = fs.statSync(fullPath);
         if (stats && stats.isFile()) {
-            if (ext.test(fullPath)) result[entry] = fullPath;
+            if (ext.test(fullPath)) {
+                const str = fullPath.match(/[\\/]src[\\/]/)[0];
+                const s = fullPath.indexOf(str) + str.length;
+                const keyName = fullPath.substr(s).replace(/\\+?/g, '/');
+                result[keyName] = fullPath;
+            }
         } else if (stats && stats.isDirectory() && entry !== 'common') {
             getFiles(fullPath, ext, result);
         }
