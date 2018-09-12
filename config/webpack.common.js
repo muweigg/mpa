@@ -82,6 +82,9 @@ module.exports = function (options) {
                             },
                         },
                         {
+                            loader: 'babel-loader'
+                        },
+                        {
                             loader: 'ts-loader',
                             options: {
                                 transpileOnly: true,
@@ -97,7 +100,8 @@ module.exports = function (options) {
                         {
                             loader: 'vue-loader',
                             options: {
-                                ts: 'ts-loader'
+                                ts: 'ts-loader',
+                                js: 'babel-loader',
                             }
                         }
                     ]
