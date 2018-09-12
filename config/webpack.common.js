@@ -113,7 +113,6 @@ module.exports = function (options) {
                         }
                     ]
                 },
-                { test: /\.json$/, use: ['json-loader'] },
                 {
                     test: /\.(jpe?g|png|gif|svg)$/,
                     use: [{
@@ -140,7 +139,7 @@ module.exports = function (options) {
 
         plugins: [
             new VueLoaderPlugin(),
-            new ForkTsCheckerWebpackPlugin({ vue: true }),
+            new ForkTsCheckerWebpackPlugin({ vue: true, tslint: false }),
             ...fileUtils.getHTMLPlugin(),
             ...spritesmithConfig,
             // new BundleAnalyzerPlugin(),
