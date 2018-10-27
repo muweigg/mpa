@@ -138,7 +138,7 @@
   }
 
   [visible#{$breakpoint}], .visible#{$breakpoint} {
-    display: block !important;
+    display: inherit !important;
   }
 }
 
@@ -184,7 +184,7 @@
         fxd-rr: row-reverse,
       ),
       flex-wrap: (
-        fxw-c : wrap,
+        fxw-w : wrap,
         fxw-n : nowrap,
         fxw-wr: wrap-reverse,
       ),
@@ -335,24 +335,41 @@
   @include generate-selectors-by-map($classes, $breakpoint);
 }
 
+@mixin generate-writing-mode ($breakpoint: null) {
+
+  $classes: (
+    writing-mode: (
+      wm: lr-tb horizontal-tb,
+      wm-lrt: lr-tb horizontal-tb,
+      wm-tbl: tb-lr vertical-lr,
+      wm-thr: tb-rl vertical-rl,
+    )
+  );
+
+  @include generate-selectors-by-map($classes, $breakpoint);
+}
+
 @mixin breakpoint-up ($breakpoint) {
   $breakpoint: get-breakpoint($breakpoint);
-  @media (min-width: $breakpoint) {
+  $media-queries: '#{$media-queries-prefix} (min-width: #{$breakpoint})';
+  @media #{$media-queries} {
     @content;
   }
 }
 
 @mixin breakpoint-down ($breakpoint) {
-  $breakpoint: get-breakpoint($breakpoint) - 0.001;
-  @media (max-width: $breakpoint) {
+  $breakpoint: get-breakpoint($breakpoint);
+  $media-queries: '#{$media-queries-prefix} (max-width: #{$breakpoint})';
+  @media #{$media-queries} {
     @content;
   }
 }
 
 @mixin breakpoint-between ($begin, $end) {
   $begin: get-breakpoint($begin);
-  $end: get-breakpoint($end) - 0.001;
-  @media (min-width: $begin) and (max-width: $end) {
+  $end: get-breakpoint($end);
+  $media-queries: '#{$media-queries-prefix} (min-width: #{$begin}) and (max-width: #{$end})';
+  @media #{$media-queries} {
     @content;
   }
 }
@@ -366,6 +383,43 @@
           #{$property}: #{$v};
         }
       }
+    }
+  }
+}
+
+@mixin generate-media-queries ($breakpoint: null) {
+  $breakpoint: get-breakpoint($breakpoint);
+  $index: str-index($media-queries, $media-queries-placeholder);
+  $placeholder-length: str-length($media-queries-placeholder);
+  $prefix: str-slice($media-queries, 1, $index - 1);
+  $suffix: str-slice($media-queries, $index + $placeholder-length, str-length($media-queries));
+  $media-queries: $prefix + $breakpoint + $suffix;
+  @media #{$media-queries} {
+    @content;
+  }
+}
+
+@mixin generate-range-media-queries ($breakpoint: null) {
+  $minOf: str-index($media-queries, 'min-width');
+  $maxOf: str-index($media-queries, 'max-width');
+  $keys: map-keys($breakpoints);
+  $index: index($keys, $breakpoint);
+  $len: length($keys);
+  @if ($minOf) {
+    $begin: get-breakpoint($breakpoint);
+    @if ($index == $len) {
+      @include breakpoint-up($begin) { @content; }
+    } @else {
+      $end: get-breakpoint(nth($keys, $index + 1));
+      @include breakpoint-between($begin, ($end - 0.001)) { @content; }
+    }
+  } @else {
+    $end: get-breakpoint($breakpoint);
+    @if ($index == 1) {
+      @include breakpoint-down($end) { @content; }
+    } @else {
+      $begin: get-breakpoint(nth($keys, $index - 1));
+      @include breakpoint-between(($begin + 0.001), $end) { @content; }
     }
   }
 }

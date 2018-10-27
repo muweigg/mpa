@@ -4,14 +4,22 @@ $class-selector: true !default;
 $attribute-selector: false !default;
 $column-offset: true !default;
 $justify: false !default;
+// Please refer to https://docs.emmet.io/cheat-sheet/
 $emmet-align: true !default;
-$emmet-float: true !default;
-$emmet-cursor: true !default;
-$emmet-display: true !default;
-$emmet-overflow: true !default;
-$emmet-position: true !default;
-$emmet-visibility: true !default;
+$emmet-float: false !default;
+$emmet-cursor: false !default;
+$emmet-display: false !default;
+$emmet-overflow: false !default;
+$emmet-position: false !default;
+$emmet-visibility: false !default;
+$emmet-writing-mode: false !default;
 $responsive: true !default;
+$media-queries-prefix: 'screen and' !default;
+$media-queries-placeholder: '{breakpoint}' !default;
+$media-queries: '#{$media-queries-prefix} (min-width: #{$media-queries-placeholder})' !default;
+// If $media-queries contains 'min-width', Output @media screen and (min-width: ??em) and (max-width: ??.999em).
+// If $media-queries contains 'max-width', Output @media screen and (min-width: ??.001em) and (max-width: ??em).
+$media-range-queries: false !default;
 $breakpoints: (
   sm: 36em, // 576px
   md: 48em, // 768px
