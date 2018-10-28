@@ -41,7 +41,7 @@
 }
 
 @function get-column-selectors ($ratio, $breakpoint: null, $offset: false) {
-  $selectors: null;
+  $selectors: '';
   @if $class-selector {
     $selectors: '.#{get-column-selector-prefix($offset)}#{$ratio}#{get-column-selector-suffix($breakpoint)}';
   }
