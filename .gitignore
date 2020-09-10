@@ -1,4 +1,2 @@
-/.cache-loader/
-/.webpack-cache/
 /dist/
-/node_modules/
+icons.png

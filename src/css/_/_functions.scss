@@ -1,0 +1,26 @@
+@function map-set ($map, $key, $value) {
+  $new: ($key: $value);
+  @return map-merge($map, $new);
+}
+
+@function str-last-index($string, $needle) {
+  $index: str-index($string, $needle);
+  $result: $index;
+  @if $index {
+    @for $i from $index + str-length($needle) through str-length($string) {
+      @if str-slice($string, $i, $i + str-length($needle) - 1) == $needle {
+        $result: $i;
+      }
+    }
+  }
+  @return $result;
+}
+
+@function icon-image-rewrite-path ($background-image, $path: '') {
+  @if ($path != '') {
+    $base-path: '../';
+    $last-index: str-last-index($background-image, $base-path) + str-length($base-path);
+    $background-image: $path + str-slice($background-image, $last-index);
+  }
+  @return $background-image;
+}

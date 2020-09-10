@@ -1,0 +1,43 @@
+@import './icons';
+@import './functions';
+
+$sprites-map: (default: 0);
+
+@each $sprite in $spritesheet-sprites {
+  $sprite-name: nth($sprite, 10);
+  $sprites-map: map-set($sprites-map, $sprite-name, $sprite);
+}
+
+$sprites-map: map-remove($sprites-map, default);
+
+@mixin icons($sprite-name, $path: '') {
+  $sprite: map-get($sprites-map, $sprite-name);
+  $sprite-image: nth($sprite, 9);
+  @include sprite-position($sprite);
+  @include sprite-width($sprite);
+  @include sprite-height($sprite);
+  $rewrite-path: icon-image-rewrite-path($sprite-image, $path);
+  background-image: url(#{$rewrite-path});
+}
+
+@mixin ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@mixin lines-ellipsis($limit: 2) {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $limit;
+}
+
+@mixin img-pos-center {
+  max-width: 100%;
+  max-height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
