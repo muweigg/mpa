@@ -3,9 +3,9 @@ const requireContext = require('require-context');
 const HtmlPlugin = require('html-webpack-plugin');
 const {SRC} = require('./helper');
 
-const SCAN_JS = requireContext(path.join(SRC, 'js'), true, /[A-Za-z0-9-_,\s]+\.js/i);
-const SCAN_CSS = requireContext(path.join(SRC, 'css'), true, /[A-Za-z0-9-_,\s]+\.s?css/i);
-const SCAN_HTML = requireContext(path.join(SRC, 'views'), true, /[A-Za-z0-9-_,\s]+\.html/i);
+const SCAN_JS = requireContext(path.resolve(SRC, 'js'), true, /[A-Za-z0-9-_,\s]+\.js/i);
+const SCAN_CSS = requireContext(path.resolve(SRC, 'css'), true, /[A-Za-z0-9-_,\s]+\.s?css/i);
+const SCAN_HTML = requireContext(path.resolve(SRC, 'views'), true, /[A-Za-z0-9-_,\s]+\.html/i);
 const FILTER_RULES = /(js|css)[\\/]common|^[\\/]?_[\\/]/i;
 const HTML_ENTRIES = {}, JS_ENTRIES = {}, CSS_ENTRIES = {};
 

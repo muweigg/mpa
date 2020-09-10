@@ -19,7 +19,6 @@
   "license": "ISC",
   "dependencies": {
     "gsap": "^3.5.1",
-    "jquery": "^3.5.1",
     "normalize.css": "^8.0.1",
     "vue": "^2.6.12"
   },
