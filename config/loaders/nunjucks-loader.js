@@ -4,7 +4,7 @@ const path = require('path');
 const nunjucks = require('nunjucks');
 
 const NunjucksLoader = nunjucks.Loader.extend({
-    //Based off of the Nunjucks 'FileSystemLoader' 
+    //Based off of the Nunjucks 'FileSystemLoader'
 
     init: function (searchPaths, sourceFoundCallback) {
         this.sourceFoundCallback = sourceFoundCallback;
@@ -57,17 +57,15 @@ module.exports = function (content) {
     const nunjucksContext = opt.context;
     const nunjucksOptions = opt.options;
 
-    const loader = new NunjucksLoader(nunjucksSearchPaths, function (path) {
-        this.addDependency(path);
-    }.bind(this));
+    const loader = new NunjucksLoader(nunjucksSearchPaths, (path) => this.addDependency(path));
 
-    const nunjEnv = new nunjucks.Environment(loader, nunjucksOptions);
+    const nunjucksEnv = new nunjucks.Environment(loader, nunjucksOptions);
     nunjucks.configure(null, {
         watch: false
     });
 
-    const template = nunjucks.compile(content, nunjEnv);
-    html = template.render(nunjucksContext);
+    const template = nunjucks.compile(content, nunjucksEnv);
+    const html = template.render(nunjucksContext);
 
     callback(null, html);
 };
