@@ -3,7 +3,7 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const SuppressExtractedStyleScriptChunks = require('./plugins/SuppressExtractedStyleScriptChunks');
-const {ROOT} = require('./helper');
+const {ROOT, SRC} = require('./helper');
 const devServer = require('./devServer');
 const entryUtils = require('./entryUtils');
 const spritesmithConfig = require('./spritesmithConfig');
@@ -29,11 +29,11 @@ module.exports = {
 
   resolve: {
     extensions: ['.js', '.vue'],
-    modules: [path.resolve(ROOT, 'src'), path.resolve(ROOT, 'node_modules')],
+    modules: [SRC, path.resolve(ROOT, 'node_modules')],
     alias: {
-      '@src': path.resolve(ROOT, 'src'),
-      '@assets': path.resolve(ROOT, 'src/assets'),
-      '@css': path.resolve(ROOT, 'src/css'),
+      '@src': SRC,
+      '@assets': path.resolve(SRC, 'assets'),
+      '@css': path.resolve(SRC, 'css'),
       'vue$': 'vue/dist/vue.esm.js',
     }
   },
@@ -104,11 +104,15 @@ module.exports = {
           {
             loader: path.resolve(ROOT, 'config/loaders/nunjucks-loader.js'),
             options: {
-              searchPaths: [path.resolve(ROOT, 'src/templates')],
+              searchPaths: [path.resolve(SRC, 'templates')],
               options: {
                 tags: {
+                  blockStart: '<%',
+                  blockEnd: '%>',
                   variableStart: '<$',
                   variableEnd: '$>',
+                  commentStart: '<#',
+                  commentEnd: '#>'
                 }
               },
               context: {}
