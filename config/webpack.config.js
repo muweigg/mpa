@@ -30,7 +30,12 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.vue'],
     modules: [path.resolve(ROOT, 'src'), path.resolve(ROOT, 'node_modules')],
-    alias: {'vue$': 'vue/dist/vue.esm.js'}
+    alias: {
+      '@src': path.resolve(ROOT, 'src'),
+      '@assets': path.resolve(ROOT, 'src/assets'),
+      '@css': path.resolve(ROOT, 'src/css'),
+      'vue$': 'vue/dist/vue.esm.js',
+    }
   },
 
   optimization: {
@@ -116,9 +121,9 @@ module.exports = {
         use: [{
           loader: 'url-loader',
           options: {
-            limit: 10240,
+            limit: 1,
             name: '[path][name].[contenthash].[ext]',
-            outputPath: url => url.replace(/^src/, '.')
+            outputPath: url => url.replace(/^.*?[\\/]/, '')
           }
         }]
       },
@@ -128,7 +133,7 @@ module.exports = {
           loader: 'file-loader',
           options: {
             name: '[path][name].[contenthash].[ext]',
-            outputPath: url => url.replace(/^src/, '.')
+            outputPath: url => url.replace(/^.*?[\\/]/, '')
           }
         }]
       },

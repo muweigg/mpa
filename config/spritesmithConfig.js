@@ -13,7 +13,7 @@ function getConfig (name) {
       css: path.resolve(SRC, `css/_/_${name}.scss`)
     },
     apiOptions: {
-      cssImageRef: `../assets/images/${name}.png`
+      cssImageRef: `~@assets/images/${name}.png`
     },
     spritesmithOptions: {
       padding: 10,

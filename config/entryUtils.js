@@ -13,8 +13,10 @@ JS_ENTRIES['js/common'] = `${SRC}/js/common.js`;
 CSS_ENTRIES['css/common'] = `${SRC}/css/common.scss`;
 
 SCAN_HTML.keys().forEach((key) => HTML_ENTRIES[key.replace(path.extname(key), '')] = `${SRC}/views/${key}`);
-SCAN_JS.keys().filter(key => !FILTER_RULES.test(key)).forEach((key) => JS_ENTRIES[`js/${key.replace(path.extname(key), '')}`] = `${SRC}/js/${key}`);
-SCAN_CSS.keys().filter(key => !FILTER_RULES.test(key)).forEach((key) => CSS_ENTRIES[`css/${key.replace(path.extname(key), '')}`] = `${SRC}/css/${key}`);
+SCAN_JS.keys().filter(key => !FILTER_RULES.test(key) && HTML_ENTRIES[key.replace(path.extname(key), '')])
+  .forEach((key) => JS_ENTRIES[`js/${key.replace(path.extname(key), '')}`] = `${SRC}/js/${key}`);
+SCAN_CSS.keys().filter(key => !FILTER_RULES.test(key) && HTML_ENTRIES[key.replace(path.extname(key), '')])
+  .forEach((key) => CSS_ENTRIES[`css/${key.replace(path.extname(key), '')}`] = `${SRC}/css/${key}`);
 
 const HTML_ENTRIES_PLUGINS = Object.keys(HTML_ENTRIES).map((key) => {
   const options = {

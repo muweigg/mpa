@@ -4,7 +4,7 @@ const isHot = /--hot/i.test(process.argv.join(' '));
 
 module.exports = {
   options: {
-    port: 4444,
+    port: 3300,
     host: '0.0.0.0',
     // historyApiFallback: { disableDotRule: true },
     compress: true,
