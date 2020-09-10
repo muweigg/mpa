@@ -107,12 +107,8 @@ module.exports = {
               searchPaths: [path.resolve(SRC, 'templates')],
               options: {
                 tags: {
-                  blockStart: '<%',
-                  blockEnd: '%>',
                   variableStart: '<$',
                   variableEnd: '$>',
-                  commentStart: '<#',
-                  commentEnd: '#>'
                 }
               },
               context: {}
