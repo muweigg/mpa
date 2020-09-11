@@ -1,6 +1,8 @@
+const fs = require('fs');
 const path = require('path');
 const SpritesmithPlugin = require('webpack-spritesmith');
 const {SRC} = require('./helper');
+const spritesDirPath = path.resolve(SRC, 'sprites');
 
 function getConfig (name) {
   return new SpritesmithPlugin({
@@ -24,6 +26,6 @@ function getConfig (name) {
   })
 }
 
-module.exports = [
-  getConfig('icons')
-]
+module.exports = fs.readdirSync(spritesDirPath).filter(
+  item => fs.statSync(path.join(spritesDirPath, item)).isDirectory()
+).map(name => getConfig(name))
