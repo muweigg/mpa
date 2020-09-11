@@ -121,9 +121,10 @@ module.exports = {
         use: [{
           loader: 'url-loader',
           options: {
-            limit: 1,
+            esModule: false,
+            limit: 10240,
             name: '[path][name].[contenthash].[ext]',
-            outputPath: url => url.replace(/^.*?[\\/]/, '')
+            outputPath: url => url.replace(/^src[\\/]/, '')
           }
         }]
       },
@@ -132,8 +133,9 @@ module.exports = {
         use: [{
           loader: 'file-loader',
           options: {
+            esModule: false,
             name: '[path][name].[contenthash].[ext]',
-            outputPath: url => url.replace(/^.*?[\\/]/, '')
+            outputPath: url => url.replace(/^src[\\/]/, '')
           }
         }]
       },
