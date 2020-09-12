@@ -1,6 +1,6 @@
 const path = require('path');
+const rimraf = require('rimraf');
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const SuppressExtractedStyleScriptChunks = require('./plugins/SuppressExtractedStyleScriptChunks');
 const {ROOT, SRC} = require('./helper');
@@ -9,6 +9,8 @@ const entryUtils = require('./entryUtils');
 const spritesmithConfig = require('./spritesmithConfig');
 
 const isDev = process.env.NODE_ENV === 'development';
+
+rimraf.sync(path.resolve(ROOT, 'dist'), require('fs'), () => {});
 
 module.exports = {
   entry: {
@@ -32,8 +34,10 @@ module.exports = {
     modules: [SRC, path.resolve(ROOT, 'node_modules')],
     alias: {
       '@src': SRC,
-      '@assets': path.resolve(SRC, 'assets'),
       '@css': path.resolve(SRC, 'css'),
+      '@assets': path.resolve(SRC, 'assets'),
+      '@images': path.resolve(SRC, 'assets/images'),
+      '@components': path.resolve(SRC, 'components'),
       'vue$': 'vue/dist/vue.esm.js',
     }
   },
@@ -122,7 +126,7 @@ module.exports = {
           loader: 'url-loader',
           options: {
             esModule: false,
-            limit: 10240,
+            limit: 1,
             name: '[path][name].[contenthash].[ext]',
             outputPath: url => url.replace(/^src[\\/]/, '')
           }
@@ -167,7 +171,6 @@ module.exports = {
     ...entryUtils.HTML_ENTRIES_PLUGINS,
     ...spritesmithConfig,
   ].concat(isDev ? [] : [
-    new CleanWebpackPlugin(),
     new SuppressExtractedStyleScriptChunks(),
   ])
 
