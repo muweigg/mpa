@@ -54,7 +54,7 @@ module.exports = {
           enforce: true
         },
         components: {
-          test: /[\\/](components|node_modules)[\\/].*\.vue$/,
+          test: /[\\/](components|node_modules)[\\/].*\.(vue|s?[ac]ss)$/,
           name: 'components/components',
           chunks: 'initial',
           priority: -5,
