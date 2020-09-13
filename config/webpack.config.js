@@ -50,11 +50,10 @@ module.exports = {
           name: 'vendors/vendors',
           chunks: 'initial',
           priority: -10,
-          minChunks: 3,
           enforce: true
         },
         components: {
-          test: /[\\/](components|node_modules)[\\/].*\.(vue|s?[ac]ss)$/,
+          test: /[\\/](components)[\\/].*\.(vue|s?[ac]ss)$/,
           name: 'components/components',
           chunks: 'initial',
           priority: -5,
