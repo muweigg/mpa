@@ -2,6 +2,7 @@ const path = require('path');
 const rimraf = require('rimraf');
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const SuppressExtractedStyleScriptChunks = require('./plugins/SuppressExtractedStyleScriptChunks');
 const {ROOT, SRC, PROD_MODE} = require('./helper');
 const devServer = require('./devServer');
@@ -170,6 +171,10 @@ module.exports = {
     ...spritesmithConfig,
   ].concat(!PROD_MODE ? [] : [
     new SuppressExtractedStyleScriptChunks(),
+    new HardSourceWebpackPlugin(),
+    new HardSourceWebpackPlugin.ExcludeModulePlugin([{
+      test: /mini-css-extract-plugin[\\/]dist[\\/]loader/
+    }]),
   ])
 
 }
