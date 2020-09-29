@@ -14,14 +14,16 @@ rimraf.sync(path.resolve(ROOT, 'dist'), require('fs'), false);
 module.exports = {
   mode: process.env.NODE_ENV,
 
+  devtool: PROD_MODE ? false : 'inline-source-map',
+
+  devServer: devServer.options,
+
+  stats: 'errors-only',
+
   entry: {
     ...entryUtils.CSS_ENTRIES,
     ...entryUtils.JS_ENTRIES,
   },
-
-  devtool: PROD_MODE ? false : 'inline-source-map',
-
-  devServer: devServer.options,
 
   output: {
     path: path.resolve(ROOT, 'dist'),
