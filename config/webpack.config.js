@@ -170,6 +170,7 @@ module.exports = {
   },
 
   plugins: [
+    new HardSourceWebpackPlugin(),
     new VueLoaderPlugin(),
     new MiniCssExtractPlugin({
       filename: `[name]${PROD_MODE ? '.[contenthash]' : ''}.css`,
@@ -179,7 +180,6 @@ module.exports = {
     ...spritesmithConfig,
   ].concat(!PROD_MODE ? [] : [
     new SuppressExtractedStyleScriptChunks(),
-    new HardSourceWebpackPlugin(),
     new HardSourceWebpackPlugin.ExcludeModulePlugin([
       {test: /mini-css-extract-plugin[\\/]dist[\\/]loader/},
       {test: /file-loader[\\/]dist[\\/]cjs/},
