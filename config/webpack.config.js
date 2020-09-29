@@ -33,7 +33,7 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['.js', '.vue'],
+    extensions: ['.vue', '.js'],
     modules: [SRC, path.resolve(ROOT, 'node_modules')],
     alias: {
       '@src': SRC,
