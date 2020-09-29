@@ -22,6 +22,10 @@ module.exports = {
 
   stats: 'errors-only',
 
+  watchOptions: {
+    ignored: /node_modules/
+  },
+
   entry: {
     ...entryUtils.CSS_ENTRIES,
     ...entryUtils.JS_ENTRIES,
