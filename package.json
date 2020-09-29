@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@172.16.20.174:muweigg/igb_mpa.git"
+    "url": "git@github.com:muweigg/mpa.git"
   },
   "keywords": [
     "mpa"
