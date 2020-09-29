@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "clean": "rimraf ./node_modules/.cache",
-    "serve": "cross-env NODE_ENV=development webpack-dev-server --config ./config/webpack.config.js  --inline --compress",
+    "serve": "cross-env NODE_ENV=development webpack-dev-server --config ./config/webpack.config.js  --inline",
     "build": "cross-env NODE_ENV=production webpack --config ./config/webpack.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
