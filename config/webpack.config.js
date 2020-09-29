@@ -14,7 +14,7 @@ rimraf.sync(path.resolve(ROOT, 'dist'), require('fs'), false);
 module.exports = {
   mode: process.env.NODE_ENV,
 
-  devtool: PROD_MODE ? false : 'inline-source-map',
+  devtool: PROD_MODE ? !PROD_MODE : 'inline-source-map',
 
   devServer: devServer.options,
 
