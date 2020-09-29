@@ -52,14 +52,14 @@ module.exports = {
           test: /[\\/]node_modules[\\/]/,
           name: 'vendors/vendors',
           chunks: 'initial',
-          priority: -10,
+          priority: 10,
           enforce: true
         },
         components: {
           test: /[\\/](components)[\\/].*\.(vue|s?[ac]ss)$/,
           name: 'components/components',
           chunks: 'initial',
-          priority: -5,
+          priority: 5,
           enforce: true
         }
       }
