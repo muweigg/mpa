@@ -174,9 +174,11 @@ module.exports = {
   ].concat(!PROD_MODE ? [] : [
     new SuppressExtractedStyleScriptChunks(),
     new HardSourceWebpackPlugin(),
-    new HardSourceWebpackPlugin.ExcludeModulePlugin([{
-      test: /mini-css-extract-plugin[\\/]dist[\\/]loader/
-    }]),
+    new HardSourceWebpackPlugin.ExcludeModulePlugin([
+      {test: /mini-css-extract-plugin[\\/]dist[\\/]loader/},
+      {test: /file-loader[\\/]dist[\\/]cjs/},
+      {test: /url-loader[\\/]dist[\\/]cjs/},
+    ]),
   ])
 
 }
