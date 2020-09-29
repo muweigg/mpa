@@ -1,11 +1,12 @@
 {
   "name": "igb",
   "version": "0.0.1",
-  "description": "igb",
+  "description": "mpa",
   "main": "index.js",
   "scripts": {
-    "serve": "cross-env NODE_ENV=development webpack-dev-server --mode development --config ./config/webpack.config.js  --inline",
-    "build": "cross-env NODE_ENV=production webpack --mode production --config ./config/webpack.config.js",
+    "clean": "rimraf ./node_modules/.cache",
+    "serve": "cross-env NODE_ENV=development webpack-dev-server --config ./config/webpack.config.js  --inline --compress --source-map",
+    "build": "cross-env NODE_ENV=production webpack --config ./config/webpack.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -13,7 +14,7 @@
     "url": "git@172.16.20.174:muweigg/igb_mpa.git"
   },
   "keywords": [
-    "igb"
+    "mpa"
   ],
   "author": "muwei",
   "license": "ISC",

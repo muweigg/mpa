@@ -9,12 +9,14 @@ const devServer = require('./devServer');
 const entryUtils = require('./entryUtils');
 const spritesmithConfig = require('./spritesmithConfig');
 
+const sourceMap = /--source-map/i.test(process.argv.join(' '));
+
 rimraf.sync(path.resolve(ROOT, 'dist'), require('fs'), false);
 
 module.exports = {
   mode: process.env.NODE_ENV,
 
-  devtool: PROD_MODE ? !PROD_MODE : 'inline-source-map',
+  devtool: sourceMap && 'inline-source-map',
 
   devServer: devServer.options,
 

@@ -1,5 +1,9 @@
+const sourceMap = /--source-map/i.test(process.argv.join(' '));
+
 module.exports = api => {
   return {
+    compact: true,
+    sourceMap: sourceMap,
     presets: [
       [
         "@babel/preset-env",
