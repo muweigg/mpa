@@ -5,8 +5,8 @@
   <title>{% block title %}MPA{% endblock %}</title>
 </head>
 <body>
-{% include "./top-menu.html" %}
+{% include "layouts/default-layout/header.html" %}
 {% block content %}{% endblock %}
-{% include "./footer.html" %}
+{% include "layouts/default-layout/footer.html" %}
 </body>
 </html>
