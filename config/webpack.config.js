@@ -1,9 +1,12 @@
 const path = require('path');
+const chalk = require('chalk');
 const rimraf = require('rimraf');
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const SuppressExtractedStyleScriptChunks = require('./plugins/SuppressExtractedStyleScriptChunks');
+const ProgressBarPlugin = require('progress-bar-webpack-plugin');
+const WebpackWatchRunPlugin = require('./plugins/WebpackWatchRunPlugin');
 const {ROOT, SRC, PROD_MODE} = require('./helper');
 const devServer = require('./devServer');
 const entryUtils = require('./entryUtils');
@@ -177,6 +180,14 @@ module.exports = {
     }),
     ...entryUtils.HTML_ENTRIES_PLUGINS,
     ...spritesmithConfig,
+    new ProgressBarPlugin({
+      format: chalk`  {cyan.bold Build} :bar {green.bold :percent} ({red.bold :elapsed} seconds)`,
+      width: 50,
+      complete: chalk.bgHex('#45B23A')(' '),
+      incomplete: chalk.bgWhite(' '),
+      clear: false
+    }),
+    new WebpackWatchRunPlugin(),
     new HardSourceWebpackPlugin(),
     new HardSourceWebpackPlugin.ExcludeModulePlugin([
       {test: /mini-css-extract-plugin[\\/]dist[\\/]loader/},

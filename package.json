@@ -40,6 +40,7 @@
     "nunjucks": "^3.2.2",
     "postcss-loader": "^4.0.0",
     "postcss-preset-env": "^6.7.0",
+    "progress-bar-webpack-plugin": "^2.1.0",
     "require-context": "^1.1.0",
     "rimraf": "^3.0.2",
     "sass": "^1.26.10",
